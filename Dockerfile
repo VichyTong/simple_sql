@@ -1,27 +1,12 @@
-FROM python:3.10-alpine AS builder
-
-RUN apk update && \
-    apk add musl-dev libpq-dev gcc
-
-RUN python -m venv /opt/venv
-
-ENV PATH = '/opt/venv/bin:$PATH'
+FROM python:3.10-alpine
 
 COPY requirements.txt .
 
-RUN pip install -r requirements.txt
-
-FROM python:3.10-alpine
-
-RUN apk update && \
-    apk add libpq-dev
-
-COPY --from=builder /opt/venv /opt/venv
-
-ENV PATH="opt/venv/bin:$PATH"
+RUN apk update --no-cache \
+&& apk add build-base postgresql-dev libpq --no-cache --virtual .build-deps \
+&& pip install --no-cache-dir --upgrade pip \
+&& pip install --no-cache-dir -r /requirements.txt
 
 WORKDIR /app
-
-COPY . /app
 
 CMD ["python", "app.py"]
