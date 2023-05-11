@@ -1,3 +1,5 @@
+import json
+from json import JSONEncoder
 import os
 
 from flask import Flask, jsonify, request
@@ -9,6 +11,14 @@ import numpy as np
 app = Flask(__name__)
 
 openai.api_key = os.getenv('OPENAI_API_KEY')
+
+
+class NumpyArrayEncoder(JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return JSONEncoder.default(self, obj)
+
 
 def embedding(words):
     response = openai.Embedding.create(
@@ -47,7 +57,7 @@ def get_nearest_N():
     conn.close()
 
     # 将结果转换为 JSON 格式并返回
-    return jsonify(results)
+    return json.dumps(results, cls=NumpyArrayEncoder)
 
 
 if __name__ == '__main__':
