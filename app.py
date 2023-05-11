@@ -3,12 +3,14 @@ from json import JSONEncoder
 import os
 
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 import psycopg2
 from pgvector.psycopg2 import register_vector
 import openai
 import numpy as np
 
 app = Flask(__name__)
+CORS(app)
 
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
