@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, jsonify, request
 import psycopg2
 from pgvector.psycopg2 import register_vector
@@ -6,15 +8,7 @@ import numpy as np
 
 app = Flask(__name__)
 
-# 设置 PostgreSQL 数据库连接参数
-DATABASE = {
-    'database': 'postgres',
-    'host': '47.93.47.3',
-    'user': 'postgres',
-    'password': '',
-    'port': '5433'
-}
-
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 def embedding(words):
     response = openai.Embedding.create(

@@ -53,4 +53,5 @@ jobs:
             sudo docker run \
             -itd --name simple_sql \
             --network=host \
+            -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
             ${{ secrets.DOCKER_REPOSITORY }}:latest
