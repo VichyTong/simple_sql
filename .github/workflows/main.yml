@@ -43,6 +43,7 @@ jobs:
           username: ${{ secrets.HOST_USERNAME }}
           key: ${{ secrets.HOST_KEY }}
           port: ${{ secrets.HOST_PORT }}
+          passphrase: ${{ secrets.PASSPHRASE }}
           script: |
             cd ~/simple_sql/
             sudo docker stop simple_sql
