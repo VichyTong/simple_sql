@@ -1,6 +1,6 @@
 FROM python:3.10-alpine AS builder
 
-RUN apk add update && \
+RUN apk update && \
     apk add musl-dev libpq-dev gcc
 
 RUN python -m venv /opt/venv
@@ -21,5 +21,7 @@ RUN apk update && \
 COPY --from=builder /opt/venv /opt/venv
 
 ENV PATH="opt/venv/bin:$PATH"
+
+COPY . /app
 
 CMD ["python", "app.py"]
