@@ -15,11 +15,11 @@ DATABASE = {
 
 
 # API 接口，查询离指定经纬度最近的 N 个结果
-@app.route('/api/get_nearest_N', methods=['GET'])
+@app.route('/api/get_nearest_N', methods=['POST'])
 def get_nearest_N():
     # 获取请求参数
-    vector = request.args.get('vector')
-    n = request.args.get('n')
+    vector = request.json.get('vector')
+    n = request.json.get('n')
 
     # 执行 SQL 查询
     conn = psycopg2.connect(**DATABASE)
